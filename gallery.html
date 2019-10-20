@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./gal.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <img src="./image/1.jpg" onclick="openNav()">
+            <img src="./image/2.jpg" onclick="openNav()">
+            <img src="./image/3.jpg" onclick="openNav()">
+            <img src="./image/4.jpg" onclick="openNav()">
+            <img src="./image/5.jpg" onclick="openNav()">
+            <img src="./image/6.jpg" onclick="openNav()">
+
+        </div>
+        <div class="overlay" id="overlay">
+            <div class="subover">
+                <span class="close" onclick="closeNav()">X</span>
+                <img src="./image/1.jpg">
+                <img src="./image/2.jpg">
+                <img src="./image/3.jpg">
+                <img src="./image/4.jpg">
+                <img src="./image/5.jpg">
+                <img src="./image/6.jpg">
+                <div class="arrow">
+                    <div class="ar_right" onclick="arrows(1)"><span class="right">&rightarrow;</span></div>
+                    <div class="ar_left" onclick="arrows(-1)"><span class="left">&leftarrow;</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="./gal.js"></script>
+</body>
+
+</html>
