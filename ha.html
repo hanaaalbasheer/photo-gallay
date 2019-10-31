@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    body{
+   text-align: center;
+   margin: 0 auto ;
+   padding: 4% 0 ;
+   color:rgb(39, 36, 36);
+   font-size: 32px;
+   font-weight: bold ;
+}
+.class-div{
+    width:200px ;
+    height: 200px;
+    margin: 0  0.5%   1%  ;
+    border: rgba(238, 231, 231, 0.952) 5px  solid ;
+    display :inline-block;
+}
+.class-img:hover{
+   transform: scale(1.1);
+   opacity: 0.7;
+}
+.photo{
+    top: 16%;
+    right: 0%;
+    z-index: 1;
+    width: 100%;
+    height: 80%;
+    text-align: center;
+    background: rgba(85, 79, 79, 0.445) ;
+}
+.new_img{
+    width: 35%;
+    height: 92%;
+    margin: 1%  0;
+    border: rgb(31, 29, 30)  solid  5px ;
+}
+.box_x{
+    position: absolute ;
+    top: 3% ;
+    right:33% ;
+    text-decoration: none;
+    color: rgb(29, 26, 26);
+}
+.left{
+    width: 25%;
+    height: 92%;
+    float: left;
+    position: absolute;
+    top: 3% ;
+    left: 25% ;
+}
+.right{
+    width: 25%;
+    height: 85%;
+    float: right ;
+    position: absolute;
+    top: 10% ;
+    right: 25% ;
+}
+.photo::after{
+    content : "";
+    clear: both;
+    display: table ;
+}
+h1{
+    color: rgb(16, 16, 17);
+    text-align: center;
+    font-size: 130%;
+}
+#of{
+    color: rgb(22, 21, 21);
+}
+.para{
+    background: rgba(66, 65, 65, 0.781) ;
+    font-size: 20px;
+    position: relative;
+    top:-17% ;
+   left:32.5%;
+    width: 35%;
+}
+.back{
+    position: absolute;
+    top:48%;
+    left: 33%;
+    text-decoration: none;
+    color: rgb(121, 42, 42);
+}
+.next{
+    position: absolute;
+    top:48%;
+    right: 33%;
+    text-decoration: none;
+    color: rgb(8, 4, 4);
+}
+.picture{
+    background:rgb(109, 107, 107) ;
+     padding:1% 19%   0;
+}
+@media screen and (max-width:920px){
+.picture{
+    padding: 1% 15% 0 ;
+}}
+.class-img{
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<body>
+    <div class="picture" id ="picture"> </div>
+    <div  id="photo" class="photo"> </div>
+    <div id="a"></div>
+</body>
+<script>
+    var photo = document.getElementById("photo");
+var showa = document.getElementById("a");
+var picture = document.getElementById("picture");
+var value ,newSrc , ul=[] , txt =[] , l,pag=1 , q ;
+const my = new Headers();
+        my.append('authorization' , 'Bearer xEpYEON0z20mHSOmx-0wVbYGqtNRAOwXAJfj') ;
+        my.append('Content-Type','application/json');
+        a(pag);
+function a(pag){
+        fetch('https://gorest.co.in/public-api/photos?page='+pag , { method :'GET', headers: my
+        }).then(response=>response.json()).then(data=>{console.log(data) ,q=data, img1(data);}  );
+}
+function img1(data){
+          var indx =[]  , ss=[] ;
+      l= cont (data , indx);
+      console.log(data.result[0].id);
+          ftxt (indx , data , txt );
+          fss (indx , data , ss);
+          fuul(indx , data ,ul);
+          draw_div_img(indx , ss ) ;
+          var  img = document.getElementsByTagName("img");
+          indx.forEach(r=>{img[r].addEventListener("click",click_image); });  }
+function cont (data ,m){
+              const l = data.result.length ;
+              for(let i =0 ; i<l ; i++){ m.push(i);}
+              return l ;}
+function ftxt (indx , data , txt ){
+           indx.forEach(r => { txt.push(data.result[r].title) ; });}
+function fss (indx , data , ss ){
+           indx.forEach(r=>{ ss.push(data.result[r].thumbnail) ;});}
+function fuul( indx , data , ul ){
+           indx.forEach(r=>{ul.push(data.result[r].url);}) ;   }
+function draw_div_img (indx , ss  ){
+              indx.forEach(r=>{
+              picture.innerHTML +='<div class="class-div"><img src="'+ss[r] +'"  class="class-img" id="'+r+'"/></div>' ;
+              } );
+          showa.innerHTML ='<a href ="#" onclick="show()">SHOR MORE</a>'; }
+          function show(){
+              pag++;
+              a(pag) ;
+                      }
+function click_image (event ){
+              value = event.target.getAttribute("id");
+              draw(ul[value]);
+              }
+function click_x (){
+              photo.innerHTML =" ";
+              photo.style="position : unset ";
+              }
+function move(event){
+          var id = event.target.getAttribute("id");
+          if(id=="left"){
+             if(value > 1){ return draw(ul[--value]); }
+              else  if(value == 1){  return draw(ul[--value]); }  return ;  }
+          if( id=="right"){
+              if( value <(l-2)){ return  draw(ul[++value]); }
+              else  if(value== (l-2)){   return  draw(ul[++value]);  }
+                  return ;  }  }
+function draw (src){
+      photo.innerHTML ='<img  src=' + src + ' class="new_img" / > ';
+      photo.innerHTML +='<a href="#" class="box_x" onclick="click_x()">X</a>' ;
+      photo.style ="position: absolute ";
+      photo.innerHTML +=' <p class="para">'+txt[value]+'</p>';
+      photo.innerHTML +='<a href="#" id="left" class="left" onclick="move(event)">'+'<a href="#" id="left" onclick="move(event)" class="back">back</a>'+'</a><a  href="#" id="right" class="right" onclick="move(event)">'+'<a href="#"  id="right" class="next" onclick="move(event)" >next</a>'+'</a>';
+      if(value==l-1){   document.getElementsByClassName("next")[0].style.color ="gainsboro";}
+      if(value==0){   document.getElementsByClassName("back")[0].style.color ="gainsboro";}
+              }
+
+</script>
+</html>
